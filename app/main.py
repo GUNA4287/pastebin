@@ -379,6 +379,16 @@ async def view_paste(
                 status_code=404
             )
         
+        # Increment view count for HTML views
+        paste.current_views += 1
+        
+        # Check if this view reached the limit
+        if paste.is_view_limit_reached():
+            paste.is_active = False
+        
+        db.commit()
+        db.refresh(paste)
+        
         # Render the paste view page
         # Jinja2 automatically escapes HTML to prevent XSS
         return templates.TemplateResponse(
