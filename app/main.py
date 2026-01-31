@@ -1,5 +1,5 @@
 """
-Main Application Module
+Main Application Module       .
 
 This is the core FastAPI application that handles all HTTP requests.
 It includes all API routes and HTML page handlers.
