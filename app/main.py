@@ -1,5 +1,5 @@
 """
-Main Application Module       .
+Main Application Module
 
 This is the core FastAPI application that handles all HTTP requests.
 It includes all API routes and HTML page handlers.
@@ -372,22 +372,12 @@ async def view_paste(
             elif paste.is_view_limit_reached():
                 error_msg = "View Limit Exceeded"
             else:
-                error_msg = "Paste Not Available.."
+                error_msg = "Paste Not Available"
             
             return HTMLResponse(
                 content=f"<html><body><h1>404 - {error_msg}</h1></body></html>",
                 status_code=404
             )
-        
-        # Increment view count for HTML views
-        paste.current_views += 1
-        
-        # Check if this view reached the limit
-        if paste.is_view_limit_reached():
-            paste.is_active = False
-        
-        db.commit()
-        db.refresh(paste)
         
         # Render the paste view page
         # Jinja2 automatically escapes HTML to prevent XSS

@@ -94,7 +94,17 @@ class Paste(Base):
         if current_time is None:
             current_time = datetime.now(timezone.utc)
         
-        return current_time >= self.expires_at
+        # Ensure both datetimes are timezone-aware for comparison
+        expires_at = self.expires_at
+        if expires_at.tzinfo is None:
+            # Database stored as naive, make it UTC-aware
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        
+        if current_time.tzinfo is None:
+            # Make current_time UTC-aware if it's naive
+            current_time = current_time.replace(tzinfo=timezone.utc)
+        
+        return current_time >= expires_at
     
     def is_view_limit_reached(self):
         """
