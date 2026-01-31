@@ -372,7 +372,7 @@ async def view_paste(
             elif paste.is_view_limit_reached():
                 error_msg = "View Limit Exceeded"
             else:
-                error_msg = "Paste Not Available"
+                error_msg = "Paste Not Available.."
             
             return HTMLResponse(
                 content=f"<html><body><h1>404 - {error_msg}</h1></body></html>",
